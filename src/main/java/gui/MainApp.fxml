@@ -28,7 +28,7 @@
             </TextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnControl" mnemonicParsing="false" text="Start" />
+                  <Button id="btnControl" fx:id="btnControl" mnemonicParsing="false" onAction="#handleControlBtn" text="Start" />
                </children>
             </HBox>
          </children>

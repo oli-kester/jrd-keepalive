@@ -4,15 +4,21 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import script.MouseAutomation;
 
+import java.awt.*;
 import java.io.File;
 
 public class MainApp extends Application
 {
+    private boolean automationActive;
     private AnchorPane rootLayout;
 
     public static void main (String[] args)
@@ -23,6 +29,7 @@ public class MainApp extends Application
     @Override
     public void start (Stage primaryStage) throws Exception
     {
+        automationActive = false;
         primaryStage.setTitle("JRD Keepalive");
 
         //load layout for main window
@@ -34,5 +41,28 @@ public class MainApp extends Application
         primaryStage.setScene(scene);
 
         primaryStage.show();
+    }
+
+    @FXML
+    private void handleControlBtn ()
+    {
+        if (! automationActive)
+        {
+            try
+            {
+                //TODO Change button text to give feedback
+                //use https://stackoverflow.com/questions/26962788/fxmlloader-how-to-access-the-components-by-fxid
+                //Button btnControl = (Button) Application..lookup("#btnControl");
+                //btnControl.setText("Stop");
+                MouseAutomation.perform();
+            } catch (AWTException e)
+            {
+                //TODO - Display dialog box that automation is not supported
+            }
+        }
+        else
+        {
+            MouseAutomation.stop();
+        }
     }
 }
