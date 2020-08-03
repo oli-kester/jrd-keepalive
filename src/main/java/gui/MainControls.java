@@ -2,6 +2,7 @@ package gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import script.MouseAutomation;
 
 public class MainControls
@@ -11,6 +12,8 @@ public class MainControls
     private boolean automationActive = false;
     @FXML
     private Button btnControl;
+    @FXML
+    TextArea txtAreaStatus;
 
     @FXML
     private void handleControlBtn ()
@@ -29,7 +32,8 @@ public class MainControls
             System.out.println("Stopping mouse automation...");
             mouseAutomation.setAutomationActive(false);
             btnControl.setText("Start");
-            automationActive = false;        }
+            automationActive = false;
+        }
     }
 
 }

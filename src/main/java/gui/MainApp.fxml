@@ -21,7 +21,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextArea fx:id="txtAreaStatus" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0">
+            <TextArea id="txtAreaStatus" fx:id="txtAreaStatus" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
