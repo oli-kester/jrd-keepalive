@@ -46,7 +46,7 @@ javafx {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'gui.MainApp'
+    mainClassName = 'gui.Launcher'
 }
 
 jlink {
@@ -59,6 +59,17 @@ sourceSets {
         resources {
             srcDirs "src/main/resources"
         }
+    }
+}
+
+//fat jar builder
+jar {
+    manifest {
+        attributes "Main-Class": "gui.Launcher"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
