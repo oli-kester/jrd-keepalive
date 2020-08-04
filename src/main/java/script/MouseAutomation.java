@@ -1,26 +1,23 @@
 package script;
 
-import gui.MainControls;
-
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MouseAutomation implements Runnable
 {
-    private final int MOUSE_ZONE_BORDER = 80;
 
     private static Robot mouseRobot;
-    private AtomicBoolean automationActive;
-    private GraphicsDevice graphicsDevice;
-    private int screenWidth;
-    private int screenHeight;
+    private final AtomicBoolean automationActive;
+    private final int screenWidth;
+    private final int screenHeight;
 
     public MouseAutomation ()
     {
         //TODO implement interrupt-based stopping mechanism
         automationActive = new AtomicBoolean(false);
 
-        graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        GraphicsDevice graphicsDevice =
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         screenWidth = graphicsDevice.getDisplayMode().getWidth();
         screenHeight = graphicsDevice.getDisplayMode().getHeight();
 
@@ -32,11 +29,6 @@ public class MouseAutomation implements Runnable
             //TODO display dialog box error regarding AWT support
             e.printStackTrace();
         }
-    }
-
-    public boolean getAutomationActive ()
-    {
-        return automationActive.get();
     }
 
     public void setAutomationActive (boolean value)
@@ -55,12 +47,13 @@ public class MouseAutomation implements Runnable
         while (automationActive.get())
         {
             int randWaitTime = ( int ) ( Math.random() * 60 );
-            int randMoveDuration = ( int ) ( Math.random() * 5 );
+//            int randMoveDuration = ( int ) ( Math.random() * 5 );
             Point pointerInfo = MouseInfo.getPointerInfo().getLocation();
 
             int newMouseX = ( int ) ( pointerInfo.getX() + ( 100 * Math.random() - 50 ) );
             int newMouseY = ( int ) ( pointerInfo.getY() + ( 100 * Math.random() - 50 ) );
 
+            int MOUSE_ZONE_BORDER = 80;
             if (( screenWidth - newMouseX ) < MOUSE_ZONE_BORDER)
             {
                 newMouseX = screenWidth - MOUSE_ZONE_BORDER;

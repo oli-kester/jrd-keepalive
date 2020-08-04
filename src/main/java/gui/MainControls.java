@@ -11,12 +11,12 @@ public class MainControls
     MouseAutomation mouseAutomation;
     private boolean automationActive = false;
     @FXML
-    private Button btnControl;
+    public Button btnControl;
     @FXML
-    TextArea txtAreaStatus;
+    public TextArea txtAreaStatus;
 
     @FXML
-    private void handleControlBtn ()
+    public void handleControlBtn ()
     {
         if (! automationActive)
         {

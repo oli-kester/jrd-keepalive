@@ -4,25 +4,20 @@
 package gui;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import script.MouseAutomation;
 
-import java.awt.*;
-import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class MainApp extends Application
 {
-    private AnchorPane rootLayout;
 
     public static void main (String[] args)
     {
-        Application.launch(args);
+        Application.launch(MainApp.class, args);
     }
 
     @Override
@@ -32,8 +27,9 @@ public class MainApp extends Application
 
         //load layout for main window
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(new File("src/main/java/gui/MainApp.fxml").toURI().toURL());
-        rootLayout = loader.load();
+        URL styleResource = getClass().getResource("/MainApp.fxml");
+        loader.setLocation(styleResource);
+        AnchorPane rootLayout = loader.load();
 
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
