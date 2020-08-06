@@ -2,4 +2,14 @@
 .gradle
 
 # Ignore Gradle build output directory
-build
+/build
+
+# IntelliJ IDEA - user-specific files
+**workspace.xml
+**usage.statistics.xml
+**tasks.xml
+/shelf
+**.iml
+/.idea/modules.xml
+/.idea/libraries/*.xml
+
