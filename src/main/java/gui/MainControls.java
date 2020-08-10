@@ -15,7 +15,8 @@ public class MainControls
     @FXML
     public TextArea txtAreaStatus; //TODO append to this with status information from MSEAUT.java. Probably need to use an interface to keep the automation class generic.
 
-    private final GuiUpdater textFieldGuiUpdater = textToAppend ->
+    @SuppressWarnings ( "FieldMayBeFinal" )
+    private GuiUpdater textFieldGuiUpdater = textToAppend ->
     {
         String currText = txtAreaStatus.getText();
         txtAreaStatus.setText(currText + "\n" + textToAppend);
