@@ -1,5 +1,7 @@
 package script;
 
+import gui.GuiUpdater;
+
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -10,11 +12,14 @@ public class MouseAutomation implements Runnable
     private final AtomicBoolean automationActive;
     private final int screenWidth;
     private final int screenHeight;
+    private final GuiUpdater guiUpdater;
 
-    public MouseAutomation ()
+    public MouseAutomation (GuiUpdater updateThis)
     {
         //TODO implement interrupt-based stopping mechanism
         automationActive = new AtomicBoolean(false);
+
+        this.guiUpdater = updateThis;
 
         GraphicsDevice graphicsDevice =
                 GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -38,11 +43,13 @@ public class MouseAutomation implements Runnable
 
     public void perform ()
     {
-        System.out.println("Now move to remote desktop. You have 10 seconds...");
+//        System.out.println("Now move to remote desktop. You have 10 seconds...");
+        guiUpdater.appendText("Now move to remote desktop. You have 10 seconds...");
 
         mouseRobot.delay(10000);
 
-        System.out.println("Beginning random mouse movements");
+//        System.out.println("Beginning random mouse movements");
+        guiUpdater.appendText("Beginning random mouse movements. ");
 
         while (automationActive.get())
         {
@@ -72,7 +79,8 @@ public class MouseAutomation implements Runnable
                 newMouseY = MOUSE_ZONE_BORDER;
             }
 
-            System.out.println("Moving to - " + newMouseX + ", " + newMouseY);
+//            System.out.println("Moving to - " + newMouseX + ", " + newMouseY);
+            guiUpdater.appendText("Moving to - " + newMouseX + ", " + newMouseY);
 
             //TODO smooth mouse movements
 
@@ -81,7 +89,8 @@ public class MouseAutomation implements Runnable
             //prevent a delay when clicking the stop button
             if (automationActive.get())
             {
-                System.out.println("Sleeping for " + randWaitTime + " seconds...");
+//                System.out.println("Sleeping for " + randWaitTime + " seconds...");
+                guiUpdater.appendText("Sleeping for " + randWaitTime + " seconds...");
                 mouseRobot.delay(randWaitTime * 1000);
             } else
             {
@@ -89,7 +98,8 @@ public class MouseAutomation implements Runnable
             }
         }
 
-        System.out.println("Mouse automation stopped.");
+//        System.out.println("Mouse automation stopped.");
+        guiUpdater.appendText("Mouse automation stopped.");
     }
 
     @Override

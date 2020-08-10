@@ -13,7 +13,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text fx:id="txtTitle" fill="#7c4444" strokeType="OUTSIDE" strokeWidth="0.0" text="Keep Remote Desktop Alive">
+            <Text fx:id="txtTitle" fill="#7c4444" strokeType="OUTSIDE" strokeWidth="0.0" text="Keep Your Software Alive">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
