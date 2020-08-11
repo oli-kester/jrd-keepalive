@@ -1,25 +1,24 @@
 package script;
 
-import gui.GuiUpdater;
+import javafx.concurrent.Task;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MouseAutomation implements Runnable
+public class MouseAutomation extends Task<MouseAutomation>
 {
 
     private static Robot mouseRobot;
     private final AtomicBoolean automationActive;
     private final int screenWidth;
     private final int screenHeight;
-    private final GuiUpdater guiUpdater;
+    private String statusMessage;
 
-    public MouseAutomation (GuiUpdater updateThis)
+    public MouseAutomation ()
     {
         //TODO implement interrupt-based stopping mechanism
+        statusMessage = "";
         automationActive = new AtomicBoolean(false);
-
-        this.guiUpdater = updateThis;
 
         GraphicsDevice graphicsDevice =
                 GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -31,25 +30,24 @@ public class MouseAutomation implements Runnable
             mouseRobot = new Robot();
         } catch (AWTException e)
         {
-            //TODO display dialog box error regarding AWT support
+            //TODO error box for non-awt support
             e.printStackTrace();
         }
     }
 
     public void setAutomationActive (boolean value)
     {
+        appendToStatusMessage("Stopping mouse automation...");
         this.automationActive.set(value);
     }
 
     public void perform ()
     {
-//        System.out.println("Now move to remote desktop. You have 10 seconds...");
-        guiUpdater.appendText("Now move to remote desktop. You have 10 seconds...");
+        appendToStatusMessage("Now move to remote desktop. You have 10 seconds...");
 
         mouseRobot.delay(10000);
 
-//        System.out.println("Beginning random mouse movements");
-        guiUpdater.appendText("Beginning random mouse movements. ");
+        appendToStatusMessage("Beginning random mouse movements. ");
 
         while (automationActive.get())
         {
@@ -79,8 +77,7 @@ public class MouseAutomation implements Runnable
                 newMouseY = MOUSE_ZONE_BORDER;
             }
 
-//            System.out.println("Moving to - " + newMouseX + ", " + newMouseY);
-            guiUpdater.appendText("Moving to - " + newMouseX + ", " + newMouseY);
+            appendToStatusMessage("Moving to - " + newMouseX + ", " + newMouseY);
 
             //TODO smooth mouse movements
 
@@ -89,8 +86,7 @@ public class MouseAutomation implements Runnable
             //prevent a delay when clicking the stop button
             if (automationActive.get())
             {
-//                System.out.println("Sleeping for " + randWaitTime + " seconds...");
-                guiUpdater.appendText("Sleeping for " + randWaitTime + " seconds...");
+                appendToStatusMessage("Sleeping for " + randWaitTime + " seconds...");
                 mouseRobot.delay(randWaitTime * 1000);
             } else
             {
@@ -98,15 +94,20 @@ public class MouseAutomation implements Runnable
             }
         }
 
-//        System.out.println("Mouse automation stopped.");
-        guiUpdater.appendText("Mouse automation stopped.");
+        appendToStatusMessage("Mouse automation stopped.");
     }
 
     @Override
-    public void run ()
+    protected MouseAutomation call ()
     {
         automationActive.set(true);
         perform();
+        return null;
     }
 
+    private void appendToStatusMessage (String message)
+    {
+        statusMessage = statusMessage + message + "\n";
+        updateMessage(statusMessage);
+    }
 }

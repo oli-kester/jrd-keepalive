@@ -13,22 +13,18 @@ public class MainControls
     @FXML
     public Button btnControl;
     @FXML
-    public TextArea txtAreaStatus; //TODO append to this with status information from MSEAUT.java. Probably need to use an interface to keep the automation class generic.
-
-    @SuppressWarnings ( "FieldMayBeFinal" )
-    private GuiUpdater textFieldGuiUpdater = textToAppend ->
-    {
-        String currText = txtAreaStatus.getText();
-        txtAreaStatus.setText(currText + "\n" + textToAppend);
-    };
+    public TextArea txtAreaStatus;
 
     @FXML
     public void handleControlBtn ()
     {
         if (! automationActive)
         {
-            mouseAutomation = new MouseAutomation(textFieldGuiUpdater);
+            mouseAutomation = new MouseAutomation();
+            txtAreaStatus.textProperty().bind(mouseAutomation.messageProperty());
+
             mouseThread = new Thread(mouseAutomation);
+            mouseThread.setDaemon(true);
 
             mouseThread.start();
             btnControl.setText("Stop");
@@ -36,11 +32,9 @@ public class MainControls
 
         } else
         {
-            System.out.println("Stopping mouse automation...");
             mouseAutomation.setAutomationActive(false);
             btnControl.setText("Start");
             automationActive = false;
         }
     }
-
 }
