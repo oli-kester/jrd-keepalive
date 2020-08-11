@@ -14,7 +14,7 @@ public class MouseAutomation extends Task<MouseAutomation>
     private final int screenHeight;
     private String statusMessage;
 
-    public MouseAutomation ()
+    public MouseAutomation () throws AWTException
     {
         //TODO implement interrupt-based stopping mechanism
         statusMessage = "";
@@ -25,14 +25,7 @@ public class MouseAutomation extends Task<MouseAutomation>
         screenWidth = graphicsDevice.getDisplayMode().getWidth();
         screenHeight = graphicsDevice.getDisplayMode().getHeight();
 
-        try
-        {
-            mouseRobot = new Robot();
-        } catch (AWTException e)
-        {
-            //TODO error box for non-awt support
-            e.printStackTrace();
-        }
+        mouseRobot = new Robot();
     }
 
     public void setAutomationActive (boolean value)
